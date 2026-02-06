@@ -5421,14 +5421,17 @@ def parse_args():
     parser.add_argument("--timeout", type=int, default=DEFAULT_REQUEST_TIMEOUT,
                       help=f"Request timeout in seconds (default: {DEFAULT_REQUEST_TIMEOUT})")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
+    parser.add_argument("--quiet", "-q", action="store_true", help="Silence log output")
     return parser.parse_args()
 
 def main():
     """Main entry point for the MCP server."""
     args = parse_args()
 
-    # Configure logging based on debug flag
-    if args.debug:
+    # Configure logging based on flags
+    if args.quiet:
+        logging.getLogger().setLevel(logging.CRITICAL)
+    elif args.debug:
         logger.setLevel(logging.DEBUG)
         logger.debug("🔍 Debug logging enabled")
 
