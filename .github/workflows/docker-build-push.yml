@@ -2,7 +2,7 @@ name: Build & Push to Docker Hub
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   # Optional: also build on tags
   # release:
   #   types: [published]
@@ -31,9 +31,4 @@ jobs:
           file: ./Dockerfile             # change if not in root
           push: true
           tags: |
-            yourusername/hexstrike-ai:latest
-            # Optional: add more tags
-            # yourusername/hexstrike-ai:${{ github.sha }}
-            # yourusername/hexstrike-ai:${{ github.ref_name }}   # branch name or tag
-          # Optional: build for multiple platforms
-          # platforms: linux/amd64,linux/arm64
+            blackst1rdocker/hexstrike-server:latest
