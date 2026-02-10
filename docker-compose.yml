@@ -1,0 +1,14 @@
+services:
+  hexstrike:
+    build:
+      context: .
+      dockerfile: hexstrike-docker.Dockerfile
+    container_name: hexstrike-server
+    volumes:
+      - .:/app
+      - /app/.venv
+    # Privileged is required for Nmap "Stealth Scans" and raw socket access
+    privileged: true
+    network_mode: "host"
+    stdin_open: true
+    tty: true
