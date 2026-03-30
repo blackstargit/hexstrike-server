@@ -24,7 +24,7 @@ RUN apt install -y \
     # Web
     feroxbuster dirb nikto sqlmap arjun wafw00f wpscan \
     # Passwords & Auth
-    hydra john hashcat \
+    hydra john hashcat wordlists \
     # Wireless & SMB
     aircrack-ng smbclient \
     # Enum / Recon
@@ -61,6 +61,12 @@ RUN python3.11 -m ensurepip && \
 RUN pipx ensurepath
 RUN pipx install prowler
 RUN pipx install scoutsuite
+
+# Create standard dirbuster wordlist symlinks (wordlists pkg uses seclists naming)
+RUN mkdir -p /usr/share/wordlists/dirbuster && \
+    ln -sf /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-medium.txt /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt && \
+    ln -sf /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-small.txt  /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt && \
+    ln -sf /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt   /usr/share/wordlists/dirbuster/directory-list-2.3-big.txt
 
 # Go Environment
 ENV GOPATH=/root/go
