@@ -594,16 +594,9 @@ class IntelligentDecisionEngine:
                 "wpscan": 0.95,  # High for WordPress sites
                 "burpsuite": 0.9,
                 "dirsearch": 0.87,
-                "gau": 0.82,
-                "waybackurls": 0.8,
                 "arjun": 0.9,
                 "paramspider": 0.85,
-                "x8": 0.88,
-                "jaeles": 0.92,
-                "dalfox": 0.93,  # High for XSS detection
-                "anew": 0.7,  # Utility tool
-                "qsreplace": 0.75,  # Utility tool
-                "uro": 0.7  # Utility tool
+                "dalfox": 0.93  # High for XSS detection
             },
             TargetType.NETWORK_HOST.value: {
                 "nmap": 0.95,
@@ -616,7 +609,6 @@ class IntelligentDecisionEngine:
                 "smbmap": 0.85,
                 "rpcclient": 0.82,
                 "nbtscan": 0.75,
-                "arp-scan": 0.85,  # Great for network discovery
                 "responder": 0.88,  # Excellent for credential harvesting
                 "hydra": 0.8,
                 "netexec": 0.85,
@@ -628,41 +620,24 @@ class IntelligentDecisionEngine:
                 "arjun": 0.95,  # Excellent for API parameter discovery
                 "paramspider": 0.88,
                 "httpx": 0.9,  # Great for API probing
-                "x8": 0.92,  # Excellent for hidden parameters
                 "katana": 0.85,  # Good for API endpoint discovery
-                "jaeles": 0.88,
                 "postman": 0.8
             },
             TargetType.CLOUD_SERVICE.value: {
                 "prowler": 0.95,  # Excellent for AWS security assessment
                 "scout-suite": 0.92,  # Great for multi-cloud assessment
-                "cloudmapper": 0.88,  # Good for AWS network visualization
-                "pacu": 0.85,  # AWS exploitation framework
-                "trivy": 0.9,  # Excellent for container scanning
-                "clair": 0.85,  # Good for container vulnerability analysis
-                "kube-hunter": 0.9,  # Excellent for Kubernetes penetration testing
-                "kube-bench": 0.88,  # Great for CIS benchmarks
-                "docker-bench-security": 0.85,  # Good for Docker security
-                "falco": 0.87,  # Great for runtime monitoring
-                "checkov": 0.9,  # Excellent for IaC scanning
-                "terrascan": 0.88  # Great for IaC security
+                "trivy": 0.9  # Excellent for container scanning
             },
             TargetType.BINARY_FILE.value: {
                 "ghidra": 0.95,  # Excellent for comprehensive analysis
-                "radare2": 0.9,  # Great for reverse engineering
                 "gdb": 0.85,
-                "gdb-peda": 0.92,  # Enhanced debugging
                 "angr": 0.88,  # Excellent for symbolic execution
                 "pwntools": 0.9,  # Great for exploit development
                 "ropgadget": 0.85,
-                "ropper": 0.88,  # Enhanced gadget searching
-                "one-gadget": 0.82,  # Specific to libc
                 "libc-database": 0.8,  # Specific to libc identification
                 "checksec": 0.75,
                 "strings": 0.7,
-                "objdump": 0.75,
-                "binwalk": 0.8,
-                "pwninit": 0.85  # Great for CTF setup
+                "objdump": 0.75
             }
         }
 
@@ -702,36 +677,31 @@ class IntelligentDecisionEngine:
                 {"tool": "nmap", "priority": 1, "params": {"scan_type": "-sV -sC", "ports": "80,443,8080,8443"}},
                 {"tool": "httpx", "priority": 2, "params": {"probe": True, "tech_detect": True}},
                 {"tool": "katana", "priority": 3, "params": {"depth": 3, "js_crawl": True}},
-                {"tool": "gau", "priority": 4, "params": {"include_subs": True}},
-                {"tool": "waybackurls", "priority": 5, "params": {"get_versions": False}},
-                {"tool": "nuclei", "priority": 6, "params": {"severity": "critical,high", "tags": "tech"}},
-                {"tool": "dirsearch", "priority": 7, "params": {"extensions": "php,html,js,txt", "threads": 30}},
-                {"tool": "gobuster", "priority": 8, "params": {"mode": "dir", "extensions": "php,html,js,txt"}}
+                {"tool": "nuclei", "priority": 4, "params": {"severity": "critical,high", "tags": "tech"}},
+                {"tool": "dirsearch", "priority": 5, "params": {"extensions": "php,html,js,txt", "threads": 30}},
+                {"tool": "gobuster", "priority": 6, "params": {"mode": "dir", "extensions": "php,html,js,txt"}}
             ],
             "api_testing": [
                 {"tool": "httpx", "priority": 1, "params": {"probe": True, "tech_detect": True}},
                 {"tool": "arjun", "priority": 2, "params": {"method": "GET,POST", "stable": True}},
-                {"tool": "x8", "priority": 3, "params": {"method": "GET", "wordlist": "/usr/share/wordlists/x8/params.txt"}},
-                {"tool": "paramspider", "priority": 4, "params": {"level": 2}},
-                {"tool": "nuclei", "priority": 5, "params": {"tags": "api,graphql,jwt", "severity": "high,critical"}},
-                {"tool": "ffuf", "priority": 6, "params": {"mode": "parameter", "method": "POST"}}
+                {"tool": "paramspider", "priority": 3, "params": {"level": 2}},
+                {"tool": "nuclei", "priority": 4, "params": {"tags": "api,graphql,jwt", "severity": "high,critical"}},
+                {"tool": "ffuf", "priority": 5, "params": {"mode": "parameter", "method": "POST"}}
             ],
             "network_discovery": [
-                {"tool": "arp-scan", "priority": 1, "params": {"local_network": True}},
-                {"tool": "rustscan", "priority": 2, "params": {"ulimit": 5000, "scripts": True}},
-                {"tool": "nmap-advanced", "priority": 3, "params": {"scan_type": "-sS", "os_detection": True, "version_detection": True}},
-                {"tool": "masscan", "priority": 4, "params": {"rate": 1000, "ports": "1-65535", "banners": True}},
-                {"tool": "enum4linux-ng", "priority": 5, "params": {"shares": True, "users": True, "groups": True}},
-                {"tool": "nbtscan", "priority": 6, "params": {"verbose": True}},
-                {"tool": "smbmap", "priority": 7, "params": {"recursive": True}},
-                {"tool": "rpcclient", "priority": 8, "params": {"commands": "enumdomusers;enumdomgroups;querydominfo"}}
+                {"tool": "rustscan", "priority": 1, "params": {"ulimit": 5000, "scripts": True}},
+                {"tool": "nmap-advanced", "priority": 2, "params": {"scan_type": "-sS", "os_detection": True, "version_detection": True}},
+                {"tool": "masscan", "priority": 3, "params": {"rate": 1000, "ports": "1-65535", "banners": True}},
+                {"tool": "enum4linux-ng", "priority": 4, "params": {"shares": True, "users": True, "groups": True}},
+                {"tool": "nbtscan", "priority": 5, "params": {"verbose": True}},
+                {"tool": "smbmap", "priority": 6, "params": {"recursive": True}},
+                {"tool": "rpcclient", "priority": 7, "params": {"commands": "enumdomusers;enumdomgroups;querydominfo"}}
             ],
             "vulnerability_assessment": [
                 {"tool": "nuclei", "priority": 1, "params": {"severity": "critical,high,medium", "update": True}},
-                {"tool": "jaeles", "priority": 2, "params": {"threads": 20, "timeout": 20}},
-                {"tool": "dalfox", "priority": 3, "params": {"mining_dom": True, "mining_dict": True}},
-                {"tool": "nikto", "priority": 4, "params": {"comprehensive": True}},
-                {"tool": "sqlmap", "priority": 5, "params": {"crawl": 2, "batch": True}}
+                {"tool": "dalfox", "priority": 2, "params": {"mining_dom": True, "mining_dict": True}},
+                {"tool": "nikto", "priority": 3, "params": {"comprehensive": True}},
+                {"tool": "sqlmap", "priority": 4, "params": {"crawl": 2, "batch": True}}
             ],
             "comprehensive_network_pentest": [
                 {"tool": "autorecon", "priority": 1, "params": {"port_scans": "top-1000-ports", "service_scans": "default"}},
@@ -743,68 +713,44 @@ class IntelligentDecisionEngine:
             "binary_exploitation": [
                 {"tool": "checksec", "priority": 1, "params": {}},
                 {"tool": "ghidra", "priority": 2, "params": {"analysis_timeout": 300, "output_format": "xml"}},
-                {"tool": "ropper", "priority": 3, "params": {"gadget_type": "rop", "quality": 2}},
-                {"tool": "one-gadget", "priority": 4, "params": {"level": 1}},
-                {"tool": "pwntools", "priority": 5, "params": {"exploit_type": "local"}},
-                {"tool": "gdb-peda", "priority": 6, "params": {"commands": "checksec\ninfo functions\nquit"}}
+                {"tool": "pwntools", "priority": 3, "params": {"exploit_type": "local"}},
+                {"tool": "gdb", "priority": 4, "params": {"commands": "checksec\ninfo functions\nquit"}}
             ],
             "ctf_pwn_challenge": [
-                {"tool": "pwninit", "priority": 1, "params": {"template_type": "python"}},
-                {"tool": "checksec", "priority": 2, "params": {}},
-                {"tool": "ghidra", "priority": 3, "params": {"analysis_timeout": 180}},
-                {"tool": "ropper", "priority": 4, "params": {"gadget_type": "all", "quality": 3}},
-                {"tool": "angr", "priority": 5, "params": {"analysis_type": "symbolic"}},
-                {"tool": "one-gadget", "priority": 6, "params": {"level": 2}}
+                {"tool": "checksec", "priority": 1, "params": {}},
+                {"tool": "ghidra", "priority": 2, "params": {"analysis_timeout": 180}},
+                {"tool": "angr", "priority": 3, "params": {"analysis_type": "symbolic"}},
+                {"tool": "pwntools", "priority": 4, "params": {"exploit_type": "local"}}
             ],
             "aws_security_assessment": [
                 {"tool": "prowler", "priority": 1, "params": {"provider": "aws", "output_format": "json"}},
-                {"tool": "scout-suite", "priority": 2, "params": {"provider": "aws"}},
-                {"tool": "cloudmapper", "priority": 3, "params": {"action": "collect"}},
-                {"tool": "pacu", "priority": 4, "params": {"modules": "iam__enum_users_roles_policies_groups"}}
-            ],
-            "kubernetes_security_assessment": [
-                {"tool": "kube-bench", "priority": 1, "params": {"output_format": "json"}},
-                {"tool": "kube-hunter", "priority": 2, "params": {"report": "json"}},
-                {"tool": "falco", "priority": 3, "params": {"duration": 120, "output_format": "json"}}
+                {"tool": "scout-suite", "priority": 2, "params": {"provider": "aws"}}
             ],
             "container_security_assessment": [
-                {"tool": "trivy", "priority": 1, "params": {"scan_type": "image", "severity": "HIGH,CRITICAL"}},
-                {"tool": "clair", "priority": 2, "params": {"output_format": "json"}},
-                {"tool": "docker-bench-security", "priority": 3, "params": {}}
-            ],
-            "iac_security_assessment": [
-                {"tool": "checkov", "priority": 1, "params": {"output_format": "json"}},
-                {"tool": "terrascan", "priority": 2, "params": {"scan_type": "all", "output_format": "json"}},
-                {"tool": "trivy", "priority": 3, "params": {"scan_type": "config", "severity": "HIGH,CRITICAL"}}
+                {"tool": "trivy", "priority": 1, "params": {"scan_type": "image", "severity": "HIGH,CRITICAL"}}
             ],
             "multi_cloud_assessment": [
                 {"tool": "scout-suite", "priority": 1, "params": {"provider": "aws"}},
-                {"tool": "prowler", "priority": 2, "params": {"provider": "aws"}},
-                {"tool": "checkov", "priority": 3, "params": {"framework": "terraform"}},
-                {"tool": "terrascan", "priority": 4, "params": {"scan_type": "all"}}
+                {"tool": "prowler", "priority": 2, "params": {"provider": "aws"}}
             ],
             "bug_bounty_reconnaissance": [
                 {"tool": "amass", "priority": 1, "params": {"mode": "enum", "passive": False}},
                 {"tool": "subfinder", "priority": 2, "params": {"silent": True, "all_sources": True}},
                 {"tool": "httpx", "priority": 3, "params": {"probe": True, "tech_detect": True, "status_code": True}},
                 {"tool": "katana", "priority": 4, "params": {"depth": 3, "js_crawl": True, "form_extraction": True}},
-                {"tool": "gau", "priority": 5, "params": {"include_subs": True}},
-                {"tool": "waybackurls", "priority": 6, "params": {"get_versions": False}},
-                {"tool": "paramspider", "priority": 7, "params": {"level": 2}},
-                {"tool": "arjun", "priority": 8, "params": {"method": "GET,POST", "stable": True}}
+                {"tool": "paramspider", "priority": 5, "params": {"level": 2}},
+                {"tool": "arjun", "priority": 6, "params": {"method": "GET,POST", "stable": True}}
             ],
             "bug_bounty_vulnerability_hunting": [
                 {"tool": "nuclei", "priority": 1, "params": {"severity": "critical,high", "tags": "rce,sqli,xss,ssrf"}},
                 {"tool": "dalfox", "priority": 2, "params": {"mining_dom": True, "mining_dict": True}},
                 {"tool": "sqlmap", "priority": 3, "params": {"batch": True, "level": 2, "risk": 2}},
-                {"tool": "jaeles", "priority": 4, "params": {"threads": 20, "timeout": 20}},
-                {"tool": "ffuf", "priority": 5, "params": {"match_codes": "200,204,301,302,307,401,403", "threads": 40}}
+                {"tool": "ffuf", "priority": 4, "params": {"match_codes": "200,204,301,302,307,401,403", "threads": 40}}
             ],
             "bug_bounty_high_impact": [
                 {"tool": "nuclei", "priority": 1, "params": {"severity": "critical", "tags": "rce,sqli,ssrf,lfi,xxe"}},
                 {"tool": "sqlmap", "priority": 2, "params": {"batch": True, "level": 3, "risk": 3, "tamper": "space2comment"}},
-                {"tool": "jaeles", "priority": 3, "params": {"signatures": "rce,sqli,ssrf", "threads": 30}},
-                {"tool": "dalfox", "priority": 4, "params": {"blind": True, "mining_dom": True, "custom_payload": "alert(document.domain)"}}
+                {"tool": "dalfox", "priority": 3, "params": {"blind": True, "mining_dom": True, "custom_payload": "alert(document.domain)"}}
             ]
         }
 
@@ -1039,20 +985,14 @@ class IntelligentDecisionEngine:
             optimized_params = self._optimize_ghidra_params(profile, context)
         elif tool == "pwntools":
             optimized_params = self._optimize_pwntools_params(profile, context)
-        elif tool == "ropper":
-            optimized_params = self._optimize_ropper_params(profile, context)
         elif tool == "angr":
             optimized_params = self._optimize_angr_params(profile, context)
         elif tool == "prowler":
             optimized_params = self._optimize_prowler_params(profile, context)
         elif tool == "scout-suite":
             optimized_params = self._optimize_scout_suite_params(profile, context)
-        elif tool == "kube-hunter":
-            optimized_params = self._optimize_kube_hunter_params(profile, context)
         elif tool == "trivy":
             optimized_params = self._optimize_trivy_params(profile, context)
-        elif tool == "checkov":
-            optimized_params = self._optimize_checkov_params(profile, context)
         else:
             # Use advanced optimizer for unknown tools
             return parameter_optimizer.optimize_parameters_advanced(tool, profile, context)
@@ -1327,27 +1267,6 @@ class IntelligentDecisionEngine:
 
         return params
 
-    def _optimize_ropper_params(self, profile: TargetProfile, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize Ropper parameters"""
-        params = {"binary": profile.target}
-
-        # Set gadget type and quality based on context
-        if context.get("exploit_type") == "rop":
-            params["gadget_type"] = "rop"
-            params["quality"] = 3
-        elif context.get("exploit_type") == "jop":
-            params["gadget_type"] = "jop"
-            params["quality"] = 2
-        else:
-            params["gadget_type"] = "all"
-            params["quality"] = 2
-
-        # Set architecture if known
-        if context.get("arch"):
-            params["arch"] = context["arch"]
-
-        return params
-
     def _optimize_angr_params(self, profile: TargetProfile, context: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize angr parameters"""
         params = {"binary": profile.target}
@@ -1516,12 +1435,9 @@ class IntelligentDecisionEngine:
             time_estimates = {
                 "nmap": 120, "gobuster": 300, "nuclei": 180, "nikto": 240,
                 "sqlmap": 600, "ffuf": 200, "hydra": 900, "amass": 300,
-                "ghidra": 300, "radare2": 180, "gdb": 120, "gdb-peda": 150,
-                "angr": 600, "pwntools": 240, "ropper": 120, "one-gadget": 60,
-                "checksec": 30, "pwninit": 60, "libc-database": 90,
-                "prowler": 600, "scout-suite": 480, "cloudmapper": 300, "pacu": 420,
-                "trivy": 180, "clair": 240, "kube-hunter": 300, "kube-bench": 120,
-                "docker-bench-security": 180, "falco": 120, "checkov": 240, "terrascan": 200
+                "ghidra": 300, "gdb": 120,
+                "angr": 600, "pwntools": 240, "checksec": 30, "libc-database": 90,
+                "prowler": 600, "scout-suite": 480, "trivy": 180
             }
             exec_time = time_estimates.get(tool, 180)
 
@@ -1884,25 +1800,21 @@ class IntelligentErrorHandler:
             "ffuf": ["gobuster", "feroxbuster", "dirsearch"],
 
             # Vulnerability scanning alternatives
-            "nuclei": ["jaeles", "nikto", "w3af"],
-            "jaeles": ["nuclei", "nikto"],
-            "nikto": ["nuclei", "jaeles", "w3af"],
+            "nuclei": ["nikto", "w3af"],
+            "nikto": ["nuclei", "w3af"],
 
             # Web crawling alternatives
-            "katana": ["gau", "waybackurls", "hakrawler"],
-            "gau": ["katana", "waybackurls", "hakrawler"],
-            "waybackurls": ["gau", "katana", "hakrawler"],
+            "katana": [],
 
             # Parameter discovery alternatives
-            "arjun": ["paramspider", "x8", "ffuf"],
-            "paramspider": ["arjun", "x8"],
-            "x8": ["arjun", "paramspider"],
+            "arjun": ["paramspider", "ffuf"],
+            "paramspider": ["arjun"],
 
             # SQL injection alternatives
             "sqlmap": ["sqlninja", "jsql-injection"],
 
             # XSS testing alternatives
-            "dalfox": ["xsser", "xsstrike"],
+            "dalfox": ["xsstrike"],
 
             # Subdomain enumeration alternatives
             "subfinder": ["amass", "assetfinder", "findomain"],
@@ -1910,22 +1822,19 @@ class IntelligentErrorHandler:
             "assetfinder": ["subfinder", "amass", "findomain"],
 
             # Cloud security alternatives
-            "prowler": ["scout-suite", "cloudmapper"],
-            "scout-suite": ["prowler", "cloudmapper"],
+            "prowler": ["scout-suite"],
+            "scout-suite": ["prowler"],
 
             # Container security alternatives
-            "trivy": ["clair", "docker-bench-security"],
-            "clair": ["trivy", "docker-bench-security"],
+            "trivy": ["docker-bench-security"],
 
             # Binary analysis alternatives
-            "ghidra": ["radare2", "ida", "binary-ninja"],
-            "radare2": ["ghidra", "objdump", "gdb"],
-            "gdb": ["radare2", "lldb"],
+            "ghidra": ["objdump", "gdb"],
+            "gdb": ["lldb"],
 
             # Exploitation alternatives
-            "pwntools": ["ropper", "ropgadget"],
-            "ropper": ["ropgadget", "pwntools"],
-            "ropgadget": ["ropper", "pwntools"]
+            "pwntools": ["ropgadget"],
+            "ropgadget": ["pwntools"]
         }
 
     def _initialize_parameter_adjustments(self) -> Dict[str, Dict[ErrorType, Dict[str, Any]]]:
@@ -2219,7 +2128,7 @@ class GracefulDegradation:
                 ["curl", "wget"]  # Basic fallback
             ],
             "vulnerability_scanning": [
-                ["nuclei", "jaeles", "nikto"],
+                ["nuclei", "nikto"],
                 ["nikto", "w3af"],
                 ["curl"]  # Basic manual testing
             ],
@@ -2229,8 +2138,8 @@ class GracefulDegradation:
                 ["dig", "nslookup"]  # Basic DNS tools
             ],
             "parameter_discovery": [
-                ["arjun", "paramspider", "x8"],
-                ["ffuf", "wfuzz"],
+                ["arjun", "paramspider"],
+                ["ffuf"],
                 ["manual_testing"]  # Manual parameter testing
             ]
         }
@@ -2449,7 +2358,7 @@ class BugBountyWorkflowManager:
 
     def __init__(self):
         self.high_impact_vulns = {
-            "rce": {"priority": 10, "tools": ["nuclei", "jaeles", "sqlmap"], "payloads": "command_injection"},
+            "rce": {"priority": 10, "tools": ["nuclei", "sqlmap"], "payloads": "command_injection"},
             "sqli": {"priority": 9, "tools": ["sqlmap", "nuclei"], "payloads": "sql_injection"},
             "ssrf": {"priority": 8, "tools": ["nuclei", "ffuf"], "payloads": "ssrf"},
             "idor": {"priority": 8, "tools": ["arjun", "paramspider", "ffuf"], "payloads": "idor"},
@@ -2464,10 +2373,8 @@ class BugBountyWorkflowManager:
             {"tool": "subfinder", "phase": "subdomain_enum", "priority": 2},
             {"tool": "httpx", "phase": "http_probe", "priority": 3},
             {"tool": "katana", "phase": "crawling", "priority": 4},
-            {"tool": "gau", "phase": "url_discovery", "priority": 5},
-            {"tool": "waybackurls", "phase": "url_discovery", "priority": 6},
-            {"tool": "paramspider", "phase": "parameter_discovery", "priority": 7},
-            {"tool": "arjun", "phase": "parameter_discovery", "priority": 8}
+            {"tool": "paramspider", "phase": "parameter_discovery", "priority": 5},
+            {"tool": "arjun", "phase": "parameter_discovery", "priority": 6}
         ]
 
     def create_reconnaissance_workflow(self, target: BugBountyTarget) -> Dict[str, Any]:
@@ -2512,8 +2419,6 @@ class BugBountyWorkflowManager:
             "description": "Discover hidden content and endpoints",
             "tools": [
                 {"tool": "katana", "params": {"depth": 3, "js_crawl": True}},
-                {"tool": "gau", "params": {"include_subs": True}},
-                {"tool": "waybackurls", "params": {}},
                 {"tool": "dirsearch", "params": {"extensions": "php,html,js,txt,json,xml"}}
             ],
             "expected_outputs": ["endpoints.txt", "js_files.txt"],
@@ -2527,8 +2432,7 @@ class BugBountyWorkflowManager:
             "description": "Discover hidden parameters",
             "tools": [
                 {"tool": "paramspider", "params": {"level": 2}},
-                {"tool": "arjun", "params": {"method": "GET,POST", "stable": True}},
-                {"tool": "x8", "params": {"method": "GET"}}
+                {"tool": "arjun", "params": {"method": "GET,POST", "stable": True}}
             ],
             "expected_outputs": ["parameters.txt"],
             "estimated_time": 240
@@ -2745,7 +2649,7 @@ class FileUploadTestingFramework:
                 {
                     "name": "reconnaissance",
                     "description": "Identify upload endpoints",
-                    "tools": ["katana", "gau", "paramspider"],
+                    "tools": ["katana", "paramspider"],
                     "expected_findings": ["upload_forms", "api_endpoints"]
                 },
                 {
@@ -2798,10 +2702,10 @@ class CTFWorkflowManager:
     def __init__(self):
         self.category_tools = {
             "web": {
-                "reconnaissance": ["httpx", "katana", "gau", "waybackurls"],
+                "reconnaissance": ["httpx", "katana"],
                 "vulnerability_scanning": ["nuclei", "dalfox", "sqlmap", "nikto"],
                 "content_discovery": ["gobuster", "dirsearch", "feroxbuster"],
-                "parameter_testing": ["arjun", "paramspider", "x8"],
+                "parameter_testing": ["arjun", "paramspider"],
                 "specialized": ["wpscan", "joomscan", "droopescan"]
             },
             "crypto": {
@@ -2812,21 +2716,21 @@ class CTFWorkflowManager:
                 "modern_crypto": ["sage", "pycrypto", "cryptography"]
             },
             "pwn": {
-                "binary_analysis": ["checksec", "ghidra", "radare2", "gdb-peda"],
-                "exploit_development": ["pwntools", "ropper", "one-gadget"],
+                "binary_analysis": ["checksec", "ghidra", "gdb"],
+                "exploit_development": ["pwntools", "ropgadget"],
                 "heap_exploitation": ["glibc-heap-analysis", "heap-viewer"],
                 "format_string": ["format-string-exploiter"],
-                "rop_chains": ["ropgadget", "ropper", "angr"]
+                "rop_chains": ["ropgadget", "angr"]
             },
             "forensics": {
-                "file_analysis": ["file", "binwalk", "foremost", "photorec"],
-                "image_forensics": ["exiftool", "steghide", "stegsolve", "zsteg"],
-                "memory_forensics": ["volatility", "rekall"],
+                "file_analysis": ["file", "foremost", "photorec"],
+                "image_forensics": ["steghide", "stegsolve", "zsteg"],
+                "memory_forensics": ["rekall"],
                 "network_forensics": ["wireshark", "tcpdump", "networkminer"],
                 "disk_forensics": ["autopsy", "sleuthkit", "testdisk"]
             },
             "rev": {
-                "disassemblers": ["ghidra", "ida", "radare2", "binary-ninja"],
+                "disassemblers": ["ghidra", "ida", "binary-ninja"],
                 "debuggers": ["gdb", "x64dbg", "ollydbg"],
                 "decompilers": ["ghidra", "hex-rays", "retdec"],
                 "packers": ["upx", "peid", "detect-it-easy"],
@@ -3011,14 +2915,12 @@ class CTFWorkflowManager:
 
         elif challenge.category == "forensics":
             if any(keyword in description_lower for keyword in ["image", "jpg", "png"]):
-                selected_tools.extend(["exiftool", "steghide", "stegsolve"])
-            if any(keyword in description_lower for keyword in ["memory", "dump"]):
-                selected_tools.append("volatility")
+                selected_tools.extend(["steghide", "stegsolve"])
             if any(keyword in description_lower for keyword in ["network", "pcap"]):
                 selected_tools.extend(["wireshark", "tcpdump"])
 
         elif challenge.category == "rev":
-            selected_tools.extend(["ghidra", "radare2", "strings"])
+            selected_tools.extend(["ghidra", "strings"])
             if any(keyword in description_lower for keyword in ["packed", "upx"]):
                 selected_tools.extend(["upx", "peid"])
 
@@ -3238,20 +3140,20 @@ class CTFWorkflowManager:
             ],
             "pwn": [
                 {"step": 1, "action": "binary_reconnaissance", "description": "Comprehensive binary analysis and protection identification", "parallel": True, "tools": ["checksec", "file", "strings", "objdump"], "estimated_time": 600},
-                {"step": 2, "action": "static_analysis", "description": "Static analysis with multiple tools", "parallel": True, "tools": ["ghidra", "radare2", "ida"], "estimated_time": 1800},
-                {"step": 3, "action": "dynamic_analysis", "description": "Dynamic analysis and debugging", "parallel": False, "tools": ["gdb-peda", "ltrace", "strace"], "estimated_time": 1200},
+                {"step": 2, "action": "static_analysis", "description": "Static analysis with multiple tools", "parallel": True, "tools": ["ghidra", "ida"], "estimated_time": 1800},
+                {"step": 3, "action": "dynamic_analysis", "description": "Dynamic analysis and debugging", "parallel": False, "tools": ["gdb", "ltrace", "strace"], "estimated_time": 1200},
                 {"step": 4, "action": "vulnerability_identification", "description": "Identify exploitable vulnerabilities", "parallel": False, "tools": ["manual"], "estimated_time": 900},
-                {"step": 5, "action": "exploit_development", "description": "Develop exploit payload", "parallel": False, "tools": ["pwntools", "ropper", "one-gadget"], "estimated_time": 2400},
-                {"step": 6, "action": "local_testing", "description": "Test exploit locally", "parallel": False, "tools": ["gdb-peda"], "estimated_time": 600},
+                {"step": 5, "action": "exploit_development", "description": "Develop exploit payload", "parallel": False, "tools": ["pwntools"], "estimated_time": 2400},
+                {"step": 6, "action": "local_testing", "description": "Test exploit locally", "parallel": False, "tools": ["gdb"], "estimated_time": 600},
                 {"step": 7, "action": "remote_exploitation", "description": "Execute exploit against remote target", "parallel": False, "tools": ["pwntools"], "estimated_time": 600},
                 {"step": 8, "action": "post_exploitation", "description": "Post-exploitation and flag extraction", "parallel": False, "tools": ["manual"], "estimated_time": 300}
             ],
             "forensics": [
-                {"step": 1, "action": "evidence_acquisition", "description": "Acquire and validate digital evidence", "parallel": False, "tools": ["file", "exiftool"], "estimated_time": 300},
-                {"step": 2, "action": "file_analysis", "description": "Comprehensive file structure analysis", "parallel": True, "tools": ["binwalk", "foremost", "strings"], "estimated_time": 900},
-                {"step": 3, "action": "metadata_extraction", "description": "Extract and analyze metadata", "parallel": True, "tools": ["exiftool", "steghide"], "estimated_time": 600},
+                {"step": 1, "action": "evidence_acquisition", "description": "Acquire and validate digital evidence", "parallel": False, "tools": ["file"], "estimated_time": 300},
+                {"step": 2, "action": "file_analysis", "description": "Comprehensive file structure analysis", "parallel": True, "tools": ["foremost", "strings"], "estimated_time": 900},
+                {"step": 3, "action": "metadata_extraction", "description": "Extract and analyze metadata", "parallel": True, "tools": ["steghide"], "estimated_time": 600},
                 {"step": 4, "action": "steganography_detection", "description": "Detect and extract hidden data", "parallel": True, "tools": ["stegsolve", "zsteg", "outguess"], "estimated_time": 1200},
-                {"step": 5, "action": "memory_analysis", "description": "Memory dump analysis if applicable", "parallel": False, "tools": ["volatility", "volatility3"], "estimated_time": 1800},
+                {"step": 5, "action": "memory_analysis", "description": "Memory dump analysis if applicable", "parallel": False, "tools": ["manual"], "estimated_time": 1800},
                 {"step": 6, "action": "network_analysis", "description": "Network traffic analysis if applicable", "parallel": False, "tools": ["wireshark", "tcpdump"], "estimated_time": 1200},
                 {"step": 7, "action": "timeline_reconstruction", "description": "Reconstruct timeline of events", "parallel": False, "tools": ["manual"], "estimated_time": 900},
                 {"step": 8, "action": "evidence_correlation", "description": "Correlate findings and extract flag", "parallel": False, "tools": ["manual"], "estimated_time": 600}
@@ -3259,8 +3161,8 @@ class CTFWorkflowManager:
             "rev": [
                 {"step": 1, "action": "binary_triage", "description": "Initial binary triage and classification", "parallel": True, "tools": ["file", "strings", "checksec"], "estimated_time": 300},
                 {"step": 2, "action": "packer_detection", "description": "Detect and unpack if necessary", "parallel": False, "tools": ["upx", "peid", "detect-it-easy"], "estimated_time": 600},
-                {"step": 3, "action": "static_disassembly", "description": "Static disassembly and analysis", "parallel": True, "tools": ["ghidra", "ida", "radare2"], "estimated_time": 2400},
-                {"step": 4, "action": "dynamic_analysis", "description": "Dynamic analysis and debugging", "parallel": False, "tools": ["gdb-peda", "ltrace", "strace"], "estimated_time": 1800},
+                {"step": 3, "action": "static_disassembly", "description": "Static disassembly and analysis", "parallel": True, "tools": ["ghidra", "ida"], "estimated_time": 2400},
+                {"step": 4, "action": "dynamic_analysis", "description": "Dynamic analysis and debugging", "parallel": False, "tools": ["gdb", "ltrace", "strace"], "estimated_time": 1800},
                 {"step": 5, "action": "algorithm_identification", "description": "Identify key algorithms and logic", "parallel": False, "tools": ["manual"], "estimated_time": 1200},
                 {"step": 6, "action": "key_extraction", "description": "Extract keys, passwords, or critical values", "parallel": False, "tools": ["manual"], "estimated_time": 900},
                 {"step": 7, "action": "solution_implementation", "description": "Implement solution based on analysis", "parallel": False, "tools": ["python", "custom"], "estimated_time": 1200},
@@ -3269,7 +3171,7 @@ class CTFWorkflowManager:
             "misc": [
                 {"step": 1, "action": "challenge_analysis", "description": "Analyze challenge type and requirements", "parallel": False, "tools": ["manual"], "estimated_time": 300},
                 {"step": 2, "action": "encoding_detection", "description": "Detect encoding or obfuscation methods", "parallel": True, "tools": ["base64", "hex", "rot13"], "estimated_time": 600},
-                {"step": 3, "action": "format_identification", "description": "Identify file formats or data structures", "parallel": False, "tools": ["file", "binwalk"], "estimated_time": 300},
+                {"step": 3, "action": "format_identification", "description": "Identify file formats or data structures", "parallel": False, "tools": ["file"], "estimated_time": 300},
                 {"step": 4, "action": "specialized_analysis", "description": "Apply specialized analysis techniques", "parallel": True, "tools": ["qr-decoder", "audio-analysis"], "estimated_time": 900},
                 {"step": 5, "action": "pattern_recognition", "description": "Identify patterns and relationships", "parallel": False, "tools": ["manual"], "estimated_time": 600},
                 {"step": 6, "action": "solution_implementation", "description": "Implement solution approach", "parallel": False, "tools": ["python", "custom"], "estimated_time": 900},
@@ -3311,17 +3213,17 @@ class CTFWorkflowManager:
             ],
             "pwn": [
                 {"task_group": "binary_analysis", "tasks": ["checksec", "file", "strings", "objdump"], "max_concurrent": 4},
-                {"task_group": "static_analysis", "tasks": ["ghidra", "radare2"], "max_concurrent": 2},
-                {"task_group": "gadget_finding", "tasks": ["ropper", "ropgadget"], "max_concurrent": 2}
+                {"task_group": "static_analysis", "tasks": ["ghidra"], "max_concurrent": 1},
+                {"task_group": "gadget_finding", "tasks": ["ropgadget"], "max_concurrent": 1}
             ],
             "forensics": [
-                {"task_group": "file_analysis", "tasks": ["binwalk", "foremost", "strings"], "max_concurrent": 3},
+                {"task_group": "file_analysis", "tasks": ["foremost", "strings"], "max_concurrent": 2},
                 {"task_group": "steganography", "tasks": ["stegsolve", "zsteg", "outguess"], "max_concurrent": 3},
-                {"task_group": "metadata_extraction", "tasks": ["exiftool", "steghide"], "max_concurrent": 2}
+                {"task_group": "metadata_extraction", "tasks": ["steghide"], "max_concurrent": 1}
             ],
             "rev": [
                 {"task_group": "initial_analysis", "tasks": ["file", "strings", "checksec"], "max_concurrent": 3},
-                {"task_group": "disassembly", "tasks": ["ghidra", "radare2"], "max_concurrent": 2},
+                {"task_group": "disassembly", "tasks": ["ghidra"], "max_concurrent": 1},
                 {"task_group": "packer_detection", "tasks": ["upx", "peid", "detect-it-easy"], "max_concurrent": 3}
             ],
             "osint": [
@@ -3331,7 +3233,7 @@ class CTFWorkflowManager:
             ],
             "misc": [
                 {"task_group": "encoding_detection", "tasks": ["base64", "hex", "rot13"], "max_concurrent": 3},
-                {"task_group": "format_analysis", "tasks": ["file", "binwalk"], "max_concurrent": 2}
+                {"task_group": "format_analysis", "tasks": ["file"], "max_concurrent": 1}
             ]
         }
 
@@ -3532,14 +3434,10 @@ class CTFToolManager:
             # Binary Exploitation (Pwn) Tools
             "checksec": "checksec --file",
             "pwntools": "python3 -c 'from pwn import *; context.log_level = \"debug\"'",
-            "ropper": "ropper --file {} --search",
             "ropgadget": "ROPgadget --binary",
-            "one-gadget": "one_gadget",
-            "gdb-peda": "gdb -ex 'source /opt/peda/peda.py'",
             "gdb-gef": "gdb -ex 'source /opt/gef/gef.py'",
             "gdb-pwngdb": "gdb -ex 'source /opt/Pwngdb/pwngdb.py'",
             "angr": "python3 -c 'import angr'",
-            "radare2": "r2 -A",
             "ghidra": "analyzeHeadless /tmp ghidra_project -import",
             "binary-ninja": "binaryninja",
             "ltrace": "ltrace",
@@ -3551,22 +3449,17 @@ class CTFToolManager:
             "file": "file",
             "strings": "strings -n 8",
             "hexdump": "hexdump -C",
-            "pwninit": "pwninit",
             "libc-database": "python3 /opt/libc-database/find.py",
 
             # Forensics Investigation Tools
-            "binwalk": "binwalk -e --dd='.*'",
             "foremost": "foremost -i {} -o /tmp/foremost_output",
             "photorec": "photorec /log /cmd",
             "testdisk": "testdisk /log",
-            "exiftool": "exiftool -all",
             "steghide": "steghide extract -sf {} -p ''",
             "stegsolve": "java -jar /opt/stegsolve/stegsolve.jar",
             "zsteg": "zsteg -a",
             "outguess": "outguess -r",
             "jsteg": "jsteg reveal",
-            "volatility": "volatility -f {} imageinfo",
-            "volatility3": "python3 /opt/volatility3/vol.py -f",
             "rekall": "rekall -f",
             "wireshark": "tshark -r",
             "tcpdump": "tcpdump -r",
@@ -3616,8 +3509,6 @@ class CTFToolManager:
             "amass": "amass enum -d",
             "assetfinder": "assetfinder",
             "subfinder": "subfinder -d",
-            "waybackurls": "waybackurls",
-            "gau": "gau",
             "httpx-osint": "httpx -title -tech-detect -status-code",
 
             # Miscellaneous Challenge Tools
@@ -3671,7 +3562,7 @@ class CTFToolManager:
 
         # Tool categories for intelligent selection
         self.tool_categories = {
-            "web_recon": ["httpx", "katana", "waybackurls", "gau", "whatweb"],
+            "web_recon": ["httpx", "katana", "whatweb"],
             "web_vuln": ["sqlmap", "dalfox", "nikto", "wpscan"],
             "web_discovery": ["gobuster", "dirsearch", "feroxbuster"],
             "web_params": ["arjun", "paramspider"],
@@ -3680,15 +3571,15 @@ class CTFToolManager:
             "crypto_rsa": ["rsatool", "factordb", "yafu"],
             "crypto_modern": ["sage", "openssl", "gpg"],
             "pwn_analysis": ["checksec", "file", "strings", "objdump", "readelf"],
-            "pwn_exploit": ["pwntools", "ropper", "ropgadget", "one-gadget"],
-            "pwn_debug": ["gdb-peda", "gdb-gef", "ltrace", "strace"],
-            "pwn_advanced": ["angr", "ghidra", "radare2"],
-            "forensics_file": ["binwalk", "foremost", "photorec", "exiftool"],
+            "pwn_exploit": ["pwntools", "ropgadget"],
+            "pwn_debug": ["gdb-gef", "ltrace", "strace"],
+            "pwn_advanced": ["angr", "ghidra"],
+            "forensics_file": ["foremost", "photorec"],
             "forensics_image": ["steghide", "stegsolve", "zsteg", "outguess"],
-            "forensics_memory": ["volatility", "volatility3", "rekall"],
+            "forensics_memory": ["rekall"],
             "forensics_network": ["wireshark", "tcpdump", "networkminer"],
-            "rev_static": ["ghidra", "ida", "radare2", "strings"],
-            "rev_dynamic": ["gdb-peda", "ltrace", "strace"],
+            "rev_static": ["ghidra", "ida", "strings"],
+            "rev_dynamic": ["gdb", "ltrace", "strace"],
             "rev_unpack": ["upx", "peid", "detect-it-easy"],
             "osint_social": ["sherlock", "social-analyzer", "theHarvester"],
             "osint_domain": ["whois", "dig", "sublist3r", "amass"],
@@ -3779,27 +3670,25 @@ class CTFToolManager:
             suggested_tools.extend(["checksec", "file", "strings"])
 
             if any(keyword in description_lower for keyword in ["buffer", "overflow", "bof"]):
-                suggested_tools.extend(["pwntools", "gdb-peda", "ropper"])
+                suggested_tools.extend(["pwntools", "ropgadget"])
             if any(keyword in description_lower for keyword in ["format", "printf", "string"]):
-                suggested_tools.extend(["pwntools", "gdb-peda"])
+                suggested_tools.extend(["pwntools", "gdb"])
             if any(keyword in description_lower for keyword in ["heap", "malloc", "free"]):
                 suggested_tools.extend(["pwntools", "gdb-gef"])
             if any(keyword in description_lower for keyword in ["rop", "gadget", "chain"]):
-                suggested_tools.extend(["ropper", "ropgadget"])
+                suggested_tools.extend(["ropgadget"])
             if any(keyword in description_lower for keyword in ["shellcode", "exploit"]):
-                suggested_tools.extend(["pwntools", "one-gadget"])
+                suggested_tools.extend(["pwntools"])
             if any(keyword in description_lower for keyword in ["canary", "stack", "protection"]):
                 suggested_tools.extend(["checksec", "pwntools"])
 
         elif category == "forensics":
             if any(keyword in description_lower for keyword in ["image", "jpg", "png", "gif", "steganography"]):
-                suggested_tools.extend(["exiftool", "steghide", "stegsolve", "zsteg"])
-            if any(keyword in description_lower for keyword in ["memory", "dump", "ram"]):
-                suggested_tools.extend(["volatility", "volatility3"])
+                suggested_tools.extend(["steghide", "stegsolve", "zsteg"])
             if any(keyword in description_lower for keyword in ["network", "pcap", "wireshark", "traffic"]):
                 suggested_tools.extend(["wireshark", "tcpdump"])
             if any(keyword in description_lower for keyword in ["file", "deleted", "recovery", "carving"]):
-                suggested_tools.extend(["binwalk", "foremost", "photorec"])
+                suggested_tools.extend(["foremost", "photorec"])
             if any(keyword in description_lower for keyword in ["disk", "filesystem", "partition"]):
                 suggested_tools.extend(["testdisk", "sleuthkit"])
             if any(keyword in description_lower for keyword in ["audio", "wav", "mp3", "sound"]):
@@ -3819,7 +3708,7 @@ class CTFToolManager:
             if any(keyword in description_lower for keyword in ["windows", "exe", "dll"]):
                 suggested_tools.extend(["ghidra", "ida", "x64dbg"])
             if any(keyword in description_lower for keyword in ["linux", "elf", "binary"]):
-                suggested_tools.extend(["ghidra", "radare2", "gdb-peda"])
+                suggested_tools.extend(["ghidra", "gdb"])
 
         elif category == "osint":
             if any(keyword in description_lower for keyword in ["username", "social", "media"]):
@@ -4458,7 +4347,7 @@ class FailureRecoverySystem:
             "hydra": ["medusa", "ncrack", "patator"],
             "hashcat": ["john", "ophcrack", "rainbowcrack"],
             "amass": ["subfinder", "sublist3r", "assetfinder"],
-            "ffuf": ["wfuzz", "gobuster", "dirb"]
+            "ffuf": ["gobuster", "dirb"]
         }
 
         self.failure_patterns = {
@@ -8912,14 +8801,12 @@ def _determine_operation_type(tool_name: str) -> str:
         "dirsearch": "web_discovery",
         "ffuf": "web_discovery",
         "nuclei": "vulnerability_scanning",
-        "jaeles": "vulnerability_scanning",
         "nikto": "vulnerability_scanning",
         "subfinder": "subdomain_enumeration",
         "amass": "subdomain_enumeration",
         "assetfinder": "subdomain_enumeration",
         "arjun": "parameter_discovery",
-        "paramspider": "parameter_discovery",
-        "x8": "parameter_discovery"
+        "paramspider": "parameter_discovery"
     }
 
     return operation_mapping.get(tool_name, "unknown_operation")
@@ -9029,14 +8916,13 @@ def health_check():
     ]
 
     network_tools = [
-        "rustscan", "masscan", "autorecon", "nbtscan", "arp-scan", "responder",
+        "rustscan", "masscan", "autorecon", "nbtscan", "responder",
         "nxc", "enum4linux-ng", "rpcclient", "enum4linux"
     ]
 
     web_security_tools = [
-        "ffuf", "feroxbuster", "dirsearch", "dotdotpwn", "xsser", "wfuzz",
-        "gau", "waybackurls", "arjun", "paramspider", "x8", "jaeles", "dalfox",
-        "httpx", "wafw00f", "burpsuite", "zaproxy", "katana", "hakrawler"
+        "ffuf", "feroxbuster", "dirsearch", "arjun", "paramspider", "dalfox",
+        "httpx", "wafw00f", "burpsuite", "katana"
     ]
 
     vuln_scanning_tools = [
@@ -9048,20 +8934,18 @@ def health_check():
     ]
 
     binary_tools = [
-        "gdb", "radare2", "binwalk", "ropgadget", "checksec", "objdump",
-        "ghidra", "pwntools", "one-gadget", "ropper", "angr", "libc-database",
-        "pwninit"
+        "gdb", "ropgadget", "checksec", "objdump",
+        "ghidra", "pwntools", "angr", "libc-database"
     ]
 
     forensics_tools = [
-        "volatility3", "vol", "steghide", "hashpump", "foremost", "exiftool",
-        "strings", "xxd", "file", "photorec", "testdisk", "scalpel", "bulk-extractor",
+        "steghide", "foremost",
+        "strings", "file", "photorec", "testdisk", "scalpel", "bulk-extractor",
         "stegsolve", "zsteg", "outguess"
     ]
 
     cloud_tools = [
-        "prowler", "scout-suite", "trivy", "kube-hunter", "kube-bench",
-        "docker-bench-security", "checkov", "terrascan", "falco", "clair"
+        "prowler", "scout-suite", "trivy"
     ]
 
     osint_tools = [
@@ -9075,7 +8959,7 @@ def health_check():
     ]
 
     api_tools = [
-        "api-schema-analyzer", "postman", "insomnia", "curl", "httpie", "anew", "qsreplace", "uro"
+        "api-schema-analyzer", "postman", "insomnia", "curl", "httpie"
     ]
 
     wireless_tools = [
@@ -9083,7 +8967,7 @@ def health_check():
     ]
 
     additional_tools = [
-        "smbmap", "volatility", "sleuthkit", "autopsy", "evil-winrm",
+        "smbmap", "sleuthkit", "autopsy", "evil-winrm",
         "paramspider", "airmon-ng", "airodump-ng", "aireplay-ng", "aircrack-ng",
         "msfvenom", "msfconsole", "graphql-scanner", "jwt-analyzer"
     ]
@@ -10618,342 +10502,6 @@ def scout_suite():
         logger.error(f"💥 Error in scout-suite endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-@app.route("/api/tools/cloudmapper", methods=["POST"])
-def cloudmapper():
-    """Execute CloudMapper for AWS network visualization and security analysis"""
-    try:
-        params = request.json
-        action = params.get("action", "collect")  # collect, prepare, webserver, find_admins, etc.
-        account = params.get("account", "")
-        config = params.get("config", "config.json")
-        additional_args = params.get("additional_args", "")
-
-        if not account and action != "webserver":
-            logger.warning("☁️  CloudMapper called without account parameter")
-            return jsonify({"error": "Account parameter is required for most actions"}), 400
-
-        command = f"cloudmapper {action}"
-
-        if account:
-            command += f" --account {account}"
-
-        if config:
-            command += f" --config {config}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"☁️  Starting CloudMapper {action}")
-        result = execute_command(command)
-        logger.info(f"📊 CloudMapper {action} completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in cloudmapper endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/pacu", methods=["POST"])
-def pacu():
-    """Execute Pacu for AWS exploitation framework"""
-    try:
-        params = request.json
-        session_name = params.get("session_name", "hexstrike_session")
-        modules = params.get("modules", "")
-        data_services = params.get("data_services", "")
-        regions = params.get("regions", "")
-        additional_args = params.get("additional_args", "")
-
-        # Create Pacu command sequence
-        commands = []
-        commands.append(f"set_session {session_name}")
-
-        if data_services:
-            commands.append(f"data {data_services}")
-
-        if regions:
-            commands.append(f"set_regions {regions}")
-
-        if modules:
-            for module in modules.split(","):
-                commands.append(f"run {module.strip()}")
-
-        commands.append("exit")
-
-        # Create command file
-        command_file = "/tmp/pacu_commands.txt"
-        with open(command_file, "w") as f:
-            f.write("\n".join(commands))
-
-        command = f"pacu < {command_file}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"☁️  Starting Pacu AWS exploitation")
-        result = execute_command(command)
-
-        # Cleanup
-        try:
-            os.remove(command_file)
-        except:
-            pass
-
-        logger.info(f"📊 Pacu exploitation completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in pacu endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/kube-hunter", methods=["POST"])
-def kube_hunter():
-    """Execute kube-hunter for Kubernetes penetration testing"""
-    try:
-        params = request.json
-        target = params.get("target", "")
-        remote = params.get("remote", "")
-        cidr = params.get("cidr", "")
-        interface = params.get("interface", "")
-        active = params.get("active", False)
-        report = params.get("report", "json")
-        additional_args = params.get("additional_args", "")
-
-        command = "kube-hunter"
-
-        if target:
-            command += f" --remote {target}"
-        elif remote:
-            command += f" --remote {remote}"
-        elif cidr:
-            command += f" --cidr {cidr}"
-        elif interface:
-            command += f" --interface {interface}"
-        else:
-            # Default to pod scanning
-            command += " --pod"
-
-        if active:
-            command += " --active"
-
-        if report:
-            command += f" --report {report}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"☁️  Starting kube-hunter Kubernetes scan")
-        result = execute_command(command)
-        logger.info(f"📊 kube-hunter scan completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in kube-hunter endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/kube-bench", methods=["POST"])
-def kube_bench():
-    """Execute kube-bench for CIS Kubernetes benchmark checks"""
-    try:
-        params = request.json
-        targets = params.get("targets", "")  # master, node, etcd, policies
-        version = params.get("version", "")
-        config_dir = params.get("config_dir", "")
-        output_format = params.get("output_format", "json")
-        additional_args = params.get("additional_args", "")
-
-        command = "kube-bench"
-
-        if targets:
-            command += f" --targets {targets}"
-
-        if version:
-            command += f" --version {version}"
-
-        if config_dir:
-            command += f" --config-dir {config_dir}"
-
-        if output_format:
-            command += f" --outputfile /tmp/kube-bench-results.{output_format} --json"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"☁️  Starting kube-bench CIS benchmark")
-        result = execute_command(command)
-        logger.info(f"📊 kube-bench benchmark completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in kube-bench endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/docker-bench-security", methods=["POST"])
-def docker_bench_security():
-    """Execute Docker Bench for Security for Docker security assessment"""
-    try:
-        params = request.json
-        checks = params.get("checks", "")  # Specific checks to run
-        exclude = params.get("exclude", "")  # Checks to exclude
-        output_file = params.get("output_file", "/tmp/docker-bench-results.json")
-        additional_args = params.get("additional_args", "")
-
-        command = "docker-bench-security"
-
-        if checks:
-            command += f" -c {checks}"
-
-        if exclude:
-            command += f" -e {exclude}"
-
-        if output_file:
-            command += f" -l {output_file}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🐳 Starting Docker Bench Security assessment")
-        result = execute_command(command)
-        result["output_file"] = output_file
-        logger.info(f"📊 Docker Bench Security completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in docker-bench-security endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/clair", methods=["POST"])
-def clair():
-    """Execute Clair for container vulnerability analysis"""
-    try:
-        params = request.json
-        image = params.get("image", "")
-        config = params.get("config", "/etc/clair/config.yaml")
-        output_format = params.get("output_format", "json")
-        additional_args = params.get("additional_args", "")
-
-        if not image:
-            logger.warning("🐳 Clair called without image parameter")
-            return jsonify({"error": "Image parameter is required"}), 400
-
-        # Use clairctl for scanning
-        command = f"clairctl analyze {image}"
-
-        if config:
-            command += f" --config {config}"
-
-        if output_format:
-            command += f" --format {output_format}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🐳 Starting Clair vulnerability scan: {image}")
-        result = execute_command(command)
-        logger.info(f"📊 Clair scan completed for {image}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in clair endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/falco", methods=["POST"])
-def falco():
-    """Execute Falco for runtime security monitoring"""
-    try:
-        params = request.json
-        config_file = params.get("config_file", "/etc/falco/falco.yaml")
-        rules_file = params.get("rules_file", "")
-        output_format = params.get("output_format", "json")
-        duration = params.get("duration", 60)  # seconds
-        additional_args = params.get("additional_args", "")
-
-        command = f"timeout {duration} falco"
-
-        if config_file:
-            command += f" --config {config_file}"
-
-        if rules_file:
-            command += f" --rules {rules_file}"
-
-        if output_format == "json":
-            command += " --json"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🛡️  Starting Falco runtime monitoring for {duration}s")
-        result = execute_command(command)
-        logger.info(f"📊 Falco monitoring completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in falco endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/checkov", methods=["POST"])
-def checkov():
-    """Execute Checkov for infrastructure as code security scanning"""
-    try:
-        params = request.json
-        directory = params.get("directory", ".")
-        framework = params.get("framework", "")  # terraform, cloudformation, kubernetes, etc.
-        check = params.get("check", "")
-        skip_check = params.get("skip_check", "")
-        output_format = params.get("output_format", "json")
-        additional_args = params.get("additional_args", "")
-
-        command = f"checkov -d {directory}"
-
-        if framework:
-            command += f" --framework {framework}"
-
-        if check:
-            command += f" --check {check}"
-
-        if skip_check:
-            command += f" --skip-check {skip_check}"
-
-        if output_format:
-            command += f" --output {output_format}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting Checkov IaC scan: {directory}")
-        result = execute_command(command)
-        logger.info(f"📊 Checkov scan completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in checkov endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/terrascan", methods=["POST"])
-def terrascan():
-    """Execute Terrascan for infrastructure as code security scanning"""
-    try:
-        params = request.json
-        scan_type = params.get("scan_type", "all")  # all, terraform, k8s, etc.
-        iac_dir = params.get("iac_dir", ".")
-        policy_type = params.get("policy_type", "")
-        output_format = params.get("output_format", "json")
-        severity = params.get("severity", "")
-        additional_args = params.get("additional_args", "")
-
-        command = f"terrascan scan -t {scan_type} -d {iac_dir}"
-
-        if policy_type:
-            command += f" -p {policy_type}"
-
-        if output_format:
-            command += f" -o {output_format}"
-
-        if severity:
-            command += f" --severity {severity}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting Terrascan IaC scan: {iac_dir}")
-        result = execute_command(command)
-        logger.info(f"📊 Terrascan scan completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in terrascan endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
 @app.route("/api/tools/dirb", methods=["POST"])
 def dirb():
     """Execute dirb with enhanced logging"""
@@ -11866,48 +11414,6 @@ def responder():
         logger.error(f"💥 Error in responder endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-@app.route("/api/tools/volatility", methods=["POST"])
-def volatility():
-    """Execute Volatility for memory forensics with enhanced logging"""
-    try:
-        params = request.json
-        memory_file = params.get("memory_file", "")
-        plugin = params.get("plugin", "")
-        profile = params.get("profile", "")
-        additional_args = params.get("additional_args", "")
-
-        if not memory_file:
-            logger.warning("🧠 Volatility called without memory_file parameter")
-            return jsonify({
-                "error": "Memory file parameter is required"
-            }), 400
-
-        if not plugin:
-            logger.warning("🧠 Volatility called without plugin parameter")
-            return jsonify({
-                "error": "Plugin parameter is required"
-            }), 400
-
-        command = f"volatility -f {memory_file}"
-
-        if profile:
-            command += f" --profile={profile}"
-
-        command += f" {plugin}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🧠 Starting Volatility analysis: {plugin}")
-        result = execute_command(command)
-        logger.info(f"📊 Volatility analysis completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in volatility endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
 @app.route("/api/tools/msfvenom", methods=["POST"])
 def msfvenom():
     """Execute MSFVenom to generate payloads with enhanced logging"""
@@ -12006,84 +11512,6 @@ def gdb():
             "error": f"Server error: {str(e)}"
         }), 500
 
-@app.route("/api/tools/radare2", methods=["POST"])
-def radare2():
-    """Execute Radare2 for binary analysis and reverse engineering with enhanced logging"""
-    try:
-        params = request.json
-        binary = params.get("binary", "")
-        commands = params.get("commands", "")
-        additional_args = params.get("additional_args", "")
-
-        if not binary:
-            logger.warning("🔧 Radare2 called without binary parameter")
-            return jsonify({
-                "error": "Binary parameter is required"
-            }), 400
-
-        if commands:
-            temp_script = "/tmp/r2_commands.txt"
-            with open(temp_script, "w") as f:
-                f.write(commands)
-            command = f"r2 -i {temp_script} -q {binary}"
-        else:
-            command = f"r2 -q {binary}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔧 Starting Radare2 analysis: {binary}")
-        result = execute_command(command)
-
-        if commands and os.path.exists("/tmp/r2_commands.txt"):
-            try:
-                os.remove("/tmp/r2_commands.txt")
-            except:
-                pass
-
-        logger.info(f"📊 Radare2 analysis completed for {binary}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in radare2 endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-@app.route("/api/tools/binwalk", methods=["POST"])
-def binwalk():
-    """Execute Binwalk for firmware and file analysis with enhanced logging"""
-    try:
-        params = request.json
-        file_path = params.get("file_path", "")
-        extract = params.get("extract", False)
-        additional_args = params.get("additional_args", "")
-
-        if not file_path:
-            logger.warning("🔧 Binwalk called without file_path parameter")
-            return jsonify({
-                "error": "File path parameter is required"
-            }), 400
-
-        command = f"binwalk"
-
-        if extract:
-            command += " -e"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        command += f" {file_path}"
-
-        logger.info(f"🔧 Starting Binwalk analysis: {file_path}")
-        result = execute_command(command)
-        logger.info(f"📊 Binwalk analysis completed for {file_path}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in binwalk endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
 @app.route("/api/tools/ropgadget", methods=["POST"])
 def ropgadget():
     """Search for ROP gadgets in a binary using ROPgadget with enhanced logging"""
@@ -12138,42 +11566,6 @@ def checksec():
         return jsonify(result)
     except Exception as e:
         logger.error(f"💥 Error in checksec endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-@app.route("/api/tools/xxd", methods=["POST"])
-def xxd():
-    """Create a hex dump of a file using xxd with enhanced logging"""
-    try:
-        params = request.json
-        file_path = params.get("file_path", "")
-        offset = params.get("offset", "0")
-        length = params.get("length", "")
-        additional_args = params.get("additional_args", "")
-
-        if not file_path:
-            logger.warning("🔧 XXD called without file_path parameter")
-            return jsonify({
-                "error": "File path parameter is required"
-            }), 400
-
-        command = f"xxd -s {offset}"
-
-        if length:
-            command += f" -l {length}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        command += f" {file_path}"
-
-        logger.info(f"🔧 Starting XXD hex dump: {file_path}")
-        result = execute_command(command)
-        logger.info(f"📊 XXD hex dump completed for {file_path}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in xxd endpoint: {str(e)}")
         return jsonify({
             "error": f"Server error: {str(e)}"
         }), 500
@@ -12364,32 +11756,6 @@ p.interactive()
         return jsonify(result)
     except Exception as e:
         logger.error(f"💥 Error in pwntools endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/one-gadget", methods=["POST"])
-def one_gadget():
-    """Execute one_gadget to find one-shot RCE gadgets in libc"""
-    try:
-        params = request.json
-        libc_path = params.get("libc_path", "")
-        level = params.get("level", 1)  # 0, 1, 2 for different constraint levels
-        additional_args = params.get("additional_args", "")
-
-        if not libc_path:
-            logger.warning("🔧 one_gadget called without libc_path parameter")
-            return jsonify({"error": "libc_path parameter is required"}), 400
-
-        command = f"one_gadget {libc_path} --level {level}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔧 Starting one_gadget analysis: {libc_path}")
-        result = execute_command(command)
-        logger.info(f"📊 one_gadget analysis completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in one_gadget endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 @app.route("/api/tools/libc-database", methods=["POST"])
@@ -12586,94 +11952,6 @@ for func_addr, func in cfg.functions.items():
         logger.error(f"💥 Error in angr endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-@app.route("/api/tools/ropper", methods=["POST"])
-def ropper():
-    """Execute ropper for advanced ROP/JOP gadget searching"""
-    try:
-        params = request.json
-        binary = params.get("binary", "")
-        gadget_type = params.get("gadget_type", "rop")  # rop, jop, sys, all
-        quality = params.get("quality", 1)  # 1-5, higher = better quality
-        arch = params.get("arch", "")  # x86, x86_64, arm, etc.
-        search_string = params.get("search_string", "")
-        additional_args = params.get("additional_args", "")
-
-        if not binary:
-            logger.warning("🔧 ropper called without binary parameter")
-            return jsonify({"error": "Binary parameter is required"}), 400
-
-        command = f"ropper --file {binary}"
-
-        if gadget_type == "rop":
-            command += " --rop"
-        elif gadget_type == "jop":
-            command += " --jop"
-        elif gadget_type == "sys":
-            command += " --sys"
-        elif gadget_type == "all":
-            command += " --all"
-
-        if quality > 1:
-            command += f" --quality {quality}"
-
-        if arch:
-            command += f" --arch {arch}"
-
-        if search_string:
-            command += f" --search '{search_string}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔧 Starting ropper analysis: {binary}")
-        result = execute_command(command)
-        logger.info(f"📊 ropper analysis completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in ropper endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/pwninit", methods=["POST"])
-def pwninit():
-    """Execute pwninit for CTF binary exploitation setup"""
-    try:
-        params = request.json
-        binary = params.get("binary", "")
-        libc = params.get("libc", "")
-        ld = params.get("ld", "")
-        template_type = params.get("template_type", "python")  # python, c
-        additional_args = params.get("additional_args", "")
-
-        if not binary:
-            logger.warning("🔧 pwninit called without binary parameter")
-            return jsonify({"error": "Binary parameter is required"}), 400
-
-        command = f"pwninit --bin {binary}"
-
-        if libc:
-            command += f" --libc {libc}"
-
-        if ld:
-            command += f" --ld {ld}"
-
-        if template_type:
-            command += f" --template {template_type}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔧 Starting pwninit setup: {binary}")
-        result = execute_command(command)
-        logger.info(f"📊 pwninit setup completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in pwninit endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-# ============================================================================
-# ADDITIONAL WEB SECURITY TOOLS
-# ============================================================================
-
 @app.route("/api/tools/feroxbuster", methods=["POST"])
 def feroxbuster():
     """Execute Feroxbuster for recursive content discovery with enhanced logging"""
@@ -12704,105 +11982,6 @@ def feroxbuster():
         return jsonify({
             "error": f"Server error: {str(e)}"
         }), 500
-
-@app.route("/api/tools/dotdotpwn", methods=["POST"])
-def dotdotpwn():
-    """Execute DotDotPwn for directory traversal testing with enhanced logging"""
-    try:
-        params = request.json
-        target = params.get("target", "")
-        module = params.get("module", "http")
-        additional_args = params.get("additional_args", "")
-
-        if not target:
-            logger.warning("🎯 DotDotPwn called without target parameter")
-            return jsonify({
-                "error": "Target parameter is required"
-            }), 400
-
-        command = f"dotdotpwn -m {module} -h {target}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        command += " -b"
-
-        logger.info(f"🔍 Starting DotDotPwn scan: {target}")
-        result = execute_command(command)
-        logger.info(f"📊 DotDotPwn scan completed for {target}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in dotdotpwn endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-@app.route("/api/tools/xsser", methods=["POST"])
-def xsser():
-    """Execute XSSer for XSS vulnerability testing with enhanced logging"""
-    try:
-        params = request.json
-        url = params.get("url", "")
-        params_str = params.get("params", "")
-        additional_args = params.get("additional_args", "")
-
-        if not url:
-            logger.warning("🌐 XSSer called without URL parameter")
-            return jsonify({
-                "error": "URL parameter is required"
-            }), 400
-
-        command = f"xsser --url '{url}'"
-
-        if params_str:
-            command += f" --param='{params_str}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting XSSer scan: {url}")
-        result = execute_command(command)
-        logger.info(f"📊 XSSer scan completed for {url}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in xsser endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-@app.route("/api/tools/wfuzz", methods=["POST"])
-def wfuzz():
-    """Execute Wfuzz for web application fuzzing with enhanced logging"""
-    try:
-        params = request.json
-        url = params.get("url", "")
-        wordlist = params.get("wordlist", "/usr/share/wordlists/dirb/common.txt")
-        additional_args = params.get("additional_args", "")
-
-        if not url:
-            logger.warning("🌐 Wfuzz called without URL parameter")
-            return jsonify({
-                "error": "URL parameter is required"
-            }), 400
-
-        command = f"wfuzz -w {wordlist} '{url}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting Wfuzz scan: {url}")
-        result = execute_command(command)
-        logger.info(f"📊 Wfuzz scan completed for {url}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in wfuzz endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-# ============================================================================
-# ENHANCED WEB APPLICATION SECURITY TOOLS (v6.0)
-# ============================================================================
 
 @app.route("/api/tools/dirsearch", methods=["POST"])
 def dirsearch():
@@ -12872,76 +12051,6 @@ def katana():
         return jsonify(result)
     except Exception as e:
         logger.error(f"💥 Error in katana endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/gau", methods=["POST"])
-def gau():
-    """Execute Gau (Get All URLs) for URL discovery from multiple sources with enhanced logging"""
-    try:
-        params = request.json
-        domain = params.get("domain", "")
-        providers = params.get("providers", "wayback,commoncrawl,otx,urlscan")
-        include_subs = params.get("include_subs", True)
-        blacklist = params.get("blacklist", "png,jpg,gif,jpeg,swf,woff,svg,pdf,css,ico")
-        additional_args = params.get("additional_args", "")
-
-        if not domain:
-            logger.warning("🌐 Gau called without domain parameter")
-            return jsonify({"error": "Domain parameter is required"}), 400
-
-        command = f"gau {domain}"
-
-        if providers != "wayback,commoncrawl,otx,urlscan":
-            command += f" --providers {providers}"
-
-        if include_subs:
-            command += " --subs"
-
-        if blacklist:
-            command += f" --blacklist {blacklist}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"📡 Starting Gau URL discovery: {domain}")
-        result = execute_command(command)
-        logger.info(f"📊 Gau URL discovery completed for {domain}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in gau endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/waybackurls", methods=["POST"])
-def waybackurls():
-    """Execute Waybackurls for historical URL discovery with enhanced logging"""
-    try:
-        params = request.json
-        domain = params.get("domain", "")
-        get_versions = params.get("get_versions", False)
-        no_subs = params.get("no_subs", False)
-        additional_args = params.get("additional_args", "")
-
-        if not domain:
-            logger.warning("🌐 Waybackurls called without domain parameter")
-            return jsonify({"error": "Domain parameter is required"}), 400
-
-        command = f"waybackurls {domain}"
-
-        if get_versions:
-            command += " --get-versions"
-
-        if no_subs:
-            command += " --no-subs"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🕰️  Starting Waybackurls discovery: {domain}")
-        result = execute_command(command)
-        logger.info(f"📊 Waybackurls discovery completed for {domain}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in waybackurls endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 @app.route("/api/tools/arjun", methods=["POST"])
@@ -13015,76 +12124,6 @@ def paramspider():
         return jsonify(result)
     except Exception as e:
         logger.error(f"💥 Error in paramspider endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/x8", methods=["POST"])
-def x8():
-    """Execute x8 for hidden parameter discovery with enhanced logging"""
-    try:
-        params = request.json
-        url = params.get("url", "")
-        wordlist = params.get("wordlist", "/usr/share/wordlists/x8/params.txt")
-        method = params.get("method", "GET")
-        body = params.get("body", "")
-        headers = params.get("headers", "")
-        additional_args = params.get("additional_args", "")
-
-        if not url:
-            logger.warning("🌐 x8 called without URL parameter")
-            return jsonify({"error": "URL parameter is required"}), 400
-
-        command = f"x8 -u {url} -w {wordlist} -X {method}"
-
-        if body:
-            command += f" -b '{body}'"
-
-        if headers:
-            command += f" -H '{headers}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting x8 parameter discovery: {url}")
-        result = execute_command(command)
-        logger.info(f"📊 x8 parameter discovery completed for {url}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in x8 endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/jaeles", methods=["POST"])
-def jaeles():
-    """Execute Jaeles for advanced vulnerability scanning with custom signatures"""
-    try:
-        params = request.json
-        url = params.get("url", "")
-        signatures = params.get("signatures", "")
-        config = params.get("config", "")
-        threads = params.get("threads", 20)
-        timeout = params.get("timeout", 20)
-        additional_args = params.get("additional_args", "")
-
-        if not url:
-            logger.warning("🌐 Jaeles called without URL parameter")
-            return jsonify({"error": "URL parameter is required"}), 400
-
-        command = f"jaeles scan -u {url} -c {threads} --timeout {timeout}"
-
-        if signatures:
-            command += f" -s {signatures}"
-
-        if config:
-            command += f" --config {config}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔬 Starting Jaeles vulnerability scan: {url}")
-        result = execute_command(command)
-        logger.info(f"📊 Jaeles vulnerability scan completed for {url}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in jaeles endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 @app.route("/api/tools/dalfox", methods=["POST"])
@@ -13181,102 +12220,6 @@ def httpx():
     except Exception as e:
         logger.error(f"💥 Error in httpx endpoint: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/anew", methods=["POST"])
-def anew():
-    """Execute anew for appending new lines to files (useful for data processing)"""
-    try:
-        params = request.json
-        input_data = params.get("input_data", "")
-        output_file = params.get("output_file", "")
-        additional_args = params.get("additional_args", "")
-
-        if not input_data:
-            logger.warning("📝 Anew called without input data")
-            return jsonify({"error": "Input data is required"}), 400
-
-        if output_file:
-            command = f"echo '{input_data}' | anew {output_file}"
-        else:
-            command = f"echo '{input_data}' | anew"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info("📝 Starting anew data processing")
-        result = execute_command(command)
-        logger.info("📊 anew data processing completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in anew endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/qsreplace", methods=["POST"])
-def qsreplace():
-    """Execute qsreplace for query string parameter replacement"""
-    try:
-        params = request.json
-        urls = params.get("urls", "")
-        replacement = params.get("replacement", "FUZZ")
-        additional_args = params.get("additional_args", "")
-
-        if not urls:
-            logger.warning("🌐 qsreplace called without URLs")
-            return jsonify({"error": "URLs parameter is required"}), 400
-
-        command = f"echo '{urls}' | qsreplace '{replacement}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info("🔄 Starting qsreplace parameter replacement")
-        result = execute_command(command)
-        logger.info("📊 qsreplace parameter replacement completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in qsreplace endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route("/api/tools/uro", methods=["POST"])
-def uro():
-    """Execute uro for filtering out similar URLs"""
-    try:
-        params = request.json
-        urls = params.get("urls", "")
-        whitelist = params.get("whitelist", "")
-        blacklist = params.get("blacklist", "")
-        additional_args = params.get("additional_args", "")
-
-        if not urls:
-            logger.warning("🌐 uro called without URLs")
-            return jsonify({"error": "URLs parameter is required"}), 400
-
-        command = f"echo '{urls}' | uro"
-
-        if whitelist:
-            command += f" --whitelist {whitelist}"
-
-        if blacklist:
-            command += f" --blacklist {blacklist}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info("🔍 Starting uro URL filtering")
-        result = execute_command(command)
-        logger.info("📊 uro URL filtering completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in uro endpoint: {str(e)}")
-        return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-# ============================================================================
-# ADVANCED WEB SECURITY TOOLS CONTINUED
-# ============================================================================
-
-# ============================================================================
-# ENHANCED HTTP TESTING FRAMEWORK (BURP SUITE ALTERNATIVE)
-# ============================================================================
 
 class HTTPTestingFramework:
     """Advanced HTTP testing framework as Burp Suite alternative"""
@@ -14315,56 +13258,6 @@ def burpsuite_alternative():
             "error": f"Server error: {str(e)}"
         }), 500
 
-@app.route("/api/tools/zap", methods=["POST"])
-def zap():
-    """Execute OWASP ZAP with enhanced logging"""
-    try:
-        params = request.json
-        target = params.get("target", "")
-        scan_type = params.get("scan_type", "baseline")
-        api_key = params.get("api_key", "")
-        daemon = params.get("daemon", False)
-        port = params.get("port", "8090")
-        host = params.get("host", "0.0.0.0")
-        format_type = params.get("format", "xml")
-        output_file = params.get("output_file", "")
-        additional_args = params.get("additional_args", "")
-
-        if not target and scan_type != "daemon":
-            logger.warning("🎯 ZAP called without target parameter")
-            return jsonify({
-                "error": "Target parameter is required for scans"
-            }), 400
-
-        if daemon:
-            command = f"zaproxy -daemon -host {host} -port {port}"
-            if api_key:
-                command += f" -config api.key={api_key}"
-        else:
-            command = f"zaproxy -cmd -quickurl {target}"
-
-            if format_type:
-                command += f" -quickout {format_type}"
-
-            if output_file:
-                command += f" -quickprogress -dir \"{output_file}\""
-
-            if api_key:
-                command += f" -config api.key={api_key}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔍 Starting ZAP scan: {target}")
-        result = execute_command(command)
-        logger.info(f"📊 ZAP scan completed for {target}")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in zap endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
 @app.route("/api/tools/wafw00f", methods=["POST"])
 def wafw00f():
     """Execute wafw00f to identify and fingerprint WAF products with enhanced logging"""
@@ -15232,46 +14125,6 @@ def api_schema_analyzer():
 # ADVANCED CTF TOOLS (v5.0 ENHANCEMENT)
 # ============================================================================
 
-@app.route("/api/tools/volatility3", methods=["POST"])
-def volatility3():
-    """Execute Volatility3 for advanced memory forensics with enhanced logging"""
-    try:
-        params = request.json
-        memory_file = params.get("memory_file", "")
-        plugin = params.get("plugin", "")
-        output_file = params.get("output_file", "")
-        additional_args = params.get("additional_args", "")
-
-        if not memory_file:
-            logger.warning("🧠 Volatility3 called without memory_file parameter")
-            return jsonify({
-                "error": "Memory file parameter is required"
-            }), 400
-
-        if not plugin:
-            logger.warning("🧠 Volatility3 called without plugin parameter")
-            return jsonify({
-                "error": "Plugin parameter is required"
-            }), 400
-
-        command = f"vol.py -f {memory_file} {plugin}"
-
-        if output_file:
-            command += f" -o {output_file}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🧠 Starting Volatility3 analysis: {plugin}")
-        result = execute_command(command)
-        logger.info(f"📊 Volatility3 analysis completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in volatility3 endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
 @app.route("/api/tools/foremost", methods=["POST"])
 def foremost():
     """Execute Foremost for file carving with enhanced logging"""
@@ -15360,138 +14213,6 @@ def steghide():
         return jsonify({
             "error": f"Server error: {str(e)}"
         }), 500
-
-@app.route("/api/tools/exiftool", methods=["POST"])
-def exiftool():
-    """Execute ExifTool for metadata extraction with enhanced logging"""
-    try:
-        params = request.json
-        file_path = params.get("file_path", "")
-        output_format = params.get("output_format", "")  # json, xml, csv
-        tags = params.get("tags", "")
-        additional_args = params.get("additional_args", "")
-
-        if not file_path:
-            logger.warning("📷 ExifTool called without file_path parameter")
-            return jsonify({
-                "error": "File path parameter is required"
-            }), 400
-
-        command = f"exiftool"
-
-        if output_format:
-            command += f" -{output_format}"
-
-        if tags:
-            command += f" -{tags}"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        command += f" {file_path}"
-
-        logger.info(f"📷 Starting ExifTool analysis: {file_path}")
-        result = execute_command(command)
-        logger.info(f"📊 ExifTool analysis completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in exiftool endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-@app.route("/api/tools/hashpump", methods=["POST"])
-def hashpump():
-    """Execute HashPump for hash length extension attacks with enhanced logging"""
-    try:
-        params = request.json
-        signature = params.get("signature", "")
-        data = params.get("data", "")
-        key_length = params.get("key_length", "")
-        append_data = params.get("append_data", "")
-        additional_args = params.get("additional_args", "")
-
-        if not all([signature, data, key_length, append_data]):
-            logger.warning("🔐 HashPump called without required parameters")
-            return jsonify({
-                "error": "Signature, data, key_length, and append_data parameters are required"
-            }), 400
-
-        command = f"hashpump -s {signature} -d '{data}' -k {key_length} -a '{append_data}'"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🔐 Starting HashPump attack")
-        result = execute_command(command)
-        logger.info(f"📊 HashPump attack completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in hashpump endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-# ============================================================================
-# BUG BOUNTY RECONNAISSANCE TOOLS (v5.0 ENHANCEMENT)
-# ============================================================================
-
-@app.route("/api/tools/hakrawler", methods=["POST"])
-def hakrawler():
-    """
-    Execute Hakrawler for web endpoint discovery with enhanced logging
-
-    Note: This implementation uses the standard Kali Linux hakrawler (hakluke/hakrawler)
-    command line arguments, NOT the Elsfa7-110 fork. The standard version uses:
-    - echo URL | hakrawler (stdin input)
-    - -d for depth (not -depth)
-    - -s for showing sources (not -forms)
-    - -u for unique URLs
-    - -subs for subdomain inclusion
-    """
-    try:
-        params = request.json
-        url = params.get("url", "")
-        depth = params.get("depth", 2)
-        forms = params.get("forms", True)
-        robots = params.get("robots", True)
-        sitemap = params.get("sitemap", True)
-        wayback = params.get("wayback", False)
-        additional_args = params.get("additional_args", "")
-
-        if not url:
-            logger.warning("🕷️ Hakrawler called without URL parameter")
-            return jsonify({
-                "error": "URL parameter is required"
-            }), 400
-
-        # Build command for standard Kali Linux hakrawler (hakluke version)
-        command = f"echo '{url}' | hakrawler -d {depth}"
-
-        if forms:
-            command += " -s"  # Show sources (includes forms)
-        if robots or sitemap or wayback:
-            command += " -subs"  # Include subdomains for better coverage
-
-        # Add unique URLs flag for cleaner output
-        command += " -u"
-
-        if additional_args:
-            command += f" {additional_args}"
-
-        logger.info(f"🕷️ Starting Hakrawler crawling: {url}")
-        result = execute_command(command)
-        logger.info(f"📊 Hakrawler crawling completed")
-        return jsonify(result)
-    except Exception as e:
-        logger.error(f"💥 Error in hakrawler endpoint: {str(e)}")
-        return jsonify({
-            "error": f"Server error: {str(e)}"
-        }), 500
-
-# ============================================================================
-# ADVANCED VULNERABILITY INTELLIGENCE API ENDPOINTS (v6.0 ENHANCEMENT)
-# ============================================================================
 
 @app.route("/api/vuln-intel/cve-monitor", methods=["POST"])
 def cve_monitor():
@@ -16402,7 +15123,7 @@ def ctf_forensics_analyzer():
                 # Determine file category and suggest tools
                 file_type = file_result.stdout.lower()
                 if "image" in file_type:
-                    results["recommended_tools"].extend(["exiftool", "steghide", "stegsolve", "zsteg"])
+                    results["recommended_tools"].extend(["steghide", "stegsolve", "zsteg"])
                     results["next_steps"].extend([
                         "Extract EXIF metadata",
                         "Check for steganographic content",
@@ -16416,14 +15137,14 @@ def ctf_forensics_analyzer():
                         "Look for DTMF tones or morse code"
                     ])
                 elif "pdf" in file_type:
-                    results["recommended_tools"].extend(["pdfinfo", "pdftotext", "binwalk"])
+                    results["recommended_tools"].extend(["pdfinfo", "pdftotext"])
                     results["next_steps"].extend([
                         "Extract text and metadata",
                         "Check for embedded files",
                         "Analyze PDF structure"
                     ])
                 elif "zip" in file_type or "archive" in file_type:
-                    results["recommended_tools"].extend(["unzip", "7zip", "binwalk"])
+                    results["recommended_tools"].extend(["unzip", "7zip"])
                     results["next_steps"].extend([
                         "Extract archive contents",
                         "Check for password protection",
@@ -16551,7 +15272,7 @@ def ctf_binary_analyzer():
                 elif "arm" in file_output:
                     results["file_info"]["architecture"] = "ARM"
 
-                results["recommended_tools"].extend(["gdb-peda", "radare2", "ghidra"])
+                results["recommended_tools"].extend(["gdb", "ghidra"])
         except Exception as e:
             results["file_info"]["error"] = str(e)
 
@@ -16647,7 +15368,7 @@ def ctf_binary_analyzer():
 
                     if useful_gadgets:
                         results["exploitation_hints"].append(f"Found {len(useful_gadgets)} ROP gadgets - ROP chain exploitation possible")
-                        results["recommended_tools"].append("ropper")
+                        results["recommended_tools"].append("ropgadget")
 
             except Exception as e:
                 results["gadgets"] = [f"Error finding gadgets: {str(e)}"]
@@ -16671,7 +15392,7 @@ def ctf_binary_analyzer():
 
         # Add tool recommendations based on findings
         if results["exploitation_hints"]:
-            results["recommended_tools"].extend(["pwntools", "gdb-peda", "one-gadget"])
+            results["recommended_tools"].extend(["pwntools", "gdb"])
 
         if "format string" in str(results["exploitation_hints"]).lower():
             results["recommended_tools"].append("format-string-exploiter")
