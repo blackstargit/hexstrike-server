@@ -10,6 +10,7 @@ import logging
 import subprocess
 import threading
 import venv
+import queue
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -699,20 +700,6 @@ class PerformanceDashboard:
                 "system_metrics_count": len(self.system_metrics)
             }
 
-# Global instances
-tech_detector = TechnologyDetector()
-rate_limiter = RateLimitDetector()
-failure_recovery = FailureRecoverySystem()
-performance_monitor = PerformanceMonitor()
-parameter_optimizer = ParameterOptimizer()
-enhanced_process_manager = EnhancedProcessManager()
-
-# Global CTF framework instances
-ctf_manager = CTFWorkflowManager()
-ctf_tools = CTFToolManager()
-ctf_automator = CTFChallengeAutomator()
-ctf_coordinator = CTFTeamCoordinator()
-
 # ============================================================================
 # PROCESS MANAGEMENT FOR COMMAND TERMINATION (v5.0 ENHANCEMENT)
 # ============================================================================
@@ -887,6 +874,3 @@ class PythonEnvironmentManager:
         """Get Python executable path for environment"""
         env_path = self.create_venv(env_name)
         return str(env_path / "bin" / "python")
-
-# Global environment manager
-env_manager = PythonEnvironmentManager()

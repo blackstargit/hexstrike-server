@@ -1095,6 +1095,8 @@ class CTFChallengeAutomator:
             "next_actions": []
         }
 
+        from core.globals import ctf_manager  # lazy import to avoid circular dependency
+
         try:
             # Create workflow
             workflow = ctf_manager.create_ctf_challenge_workflow(challenge)
@@ -1138,6 +1140,7 @@ class CTFChallengeAutomator:
 
     def _execute_parallel_step(self, step: Dict[str, Any], challenge: CTFChallenge) -> Dict[str, Any]:
         """Execute a step with parallel tool execution"""
+        from core.globals import ctf_tools  # lazy import to avoid circular dependency
         step_result = {
             "step": step["step"],
             "action": step["action"],
@@ -1168,6 +1171,7 @@ class CTFChallengeAutomator:
 
     def _execute_sequential_step(self, step: Dict[str, Any], challenge: CTFChallenge) -> Dict[str, Any]:
         """Execute a step sequentially"""
+        from core.globals import ctf_tools  # lazy import to avoid circular dependency
         step_result = {
             "step": step["step"],
             "action": step["action"],
@@ -1238,6 +1242,7 @@ class CTFChallengeAutomator:
 
     def _generate_manual_guidance(self, challenge: CTFChallenge, current_result: Dict[str, Any]) -> List[Dict[str, str]]:
         """Generate manual guidance when automation fails"""
+        from core.globals import ctf_tools  # lazy import to avoid circular dependency
         guidance = []
 
         # Analyze what was attempted

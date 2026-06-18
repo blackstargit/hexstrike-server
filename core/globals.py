@@ -116,11 +116,11 @@ from core.bug_bounty import BugBountyWorkflowManager, FileUploadTestingFramework
 from core.ctf import CTFWorkflowManager, CTFToolManager, CTFChallengeAutomator, CTFTeamCoordinator
 from core.optimizer import (
     TechnologyDetector, RateLimitDetector, FailureRecoverySystem,
-    PerformanceMonitor, ParameterOptimizer, EnhancedProcessManager
+    PerformanceMonitor, ParameterOptimizer
 )
 from core.process_manager import (
     ProcessPool, AdvancedCache, ProcessManager, PythonEnvironmentManager,
-    ResourceMonitor, PerformanceDashboard
+    ResourceMonitor, PerformanceDashboard, EnhancedProcessManager
 )
 from core.cve_intelligence import CVEIntelligenceManager
 from core.exploit_engine import AIExploitGenerator, VulnerabilityCorrelator

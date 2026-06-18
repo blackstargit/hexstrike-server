@@ -2,8 +2,9 @@
 """MCP tool registrations: network scanning"""
 
 import logging
+from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
-from mcp_tools.core import HexStrikeClient
+from mcp_tools.core import HexStrikeClient, HexStrikeColors
 
 logger = logging.getLogger(__name__)
 

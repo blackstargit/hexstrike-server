@@ -2,8 +2,10 @@
 """MCP tool registrations: web application security and API testing"""
 
 import logging
+import time
+from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
-from mcp_tools.core import HexStrikeClient
+from mcp_tools.core import HexStrikeClient, HexStrikeColors
 
 logger = logging.getLogger(__name__)
 
@@ -705,7 +707,7 @@ def register_web_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
             logger.info(f"🤖 Generating {attack_type} payloads...")
 
             # Generate payloads for this attack type
-            payload_result = self.ai_generate_payload(attack_type, "advanced", "", target_url)
+            payload_result = ai_generate_payload(attack_type, "advanced", "", target_url)
 
             if payload_result.get("success"):
                 payload_data = payload_result.get("ai_payload_generation", {})
@@ -924,7 +926,7 @@ def register_web_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
 
         # 1. API Endpoint Fuzzing
         logger.info("🔍 Phase 1: API endpoint discovery and fuzzing")
-        fuzz_result = self.api_fuzzer(base_url)
+        fuzz_result = api_fuzzer(base_url)
         if fuzz_result.get("success"):
             audit_results["tests_performed"].append("api_fuzzing")
             audit_results["api_fuzzing"] = fuzz_result
@@ -932,7 +934,7 @@ def register_web_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
         # 2. Schema Analysis (if provided)
         if schema_url:
             logger.info("🔍 Phase 2: API schema analysis")
-            schema_result = self.api_schema_analyzer(schema_url)
+            schema_result = api_schema_analyzer(schema_url)
             if schema_result.get("success"):
                 audit_results["tests_performed"].append("schema_analysis")
                 audit_results["schema_analysis"] = schema_result
@@ -943,7 +945,7 @@ def register_web_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
         # 3. JWT Analysis (if provided)
         if jwt_token:
             logger.info("🔍 Phase 3: JWT token analysis")
-            jwt_result = self.jwt_analyzer(jwt_token, base_url)
+            jwt_result = jwt_analyzer(jwt_token, base_url)
             if jwt_result.get("success"):
                 audit_results["tests_performed"].append("jwt_analysis")
                 audit_results["jwt_analysis"] = jwt_result
@@ -954,7 +956,7 @@ def register_web_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
         # 4. GraphQL Testing (if provided)
         if graphql_endpoint:
             logger.info("🔍 Phase 4: GraphQL security scanning")
-            graphql_result = self.graphql_scanner(graphql_endpoint)
+            graphql_result = graphql_scanner(graphql_endpoint)
             if graphql_result.get("success"):
                 audit_results["tests_performed"].append("graphql_scanning")
                 audit_results["graphql_scanning"] = graphql_result

@@ -2,6 +2,7 @@
 """MCP tool registrations: system, file operations, and process management"""
 
 import logging
+from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
 from mcp_tools.core import HexStrikeClient
 

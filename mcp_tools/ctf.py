@@ -2,6 +2,8 @@
 """MCP tool registrations: CTF and bug bounty workflows"""
 
 import logging
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
 from mcp_tools.core import HexStrikeClient
 

@@ -29,6 +29,7 @@ from core.command_executor import (
 from core.visual_engine import ModernVisualEngine
 from core.decision_engine import TargetType, TechnologyStack, TargetProfile, AttackChain
 from core.error_handler import ErrorType, RecoveryAction, ErrorContext
+from core.bug_bounty import BugBountyTarget
 
 # ============================================================================
 # BUG BOUNTY HUNTING WORKFLOW API ENDPOINTS

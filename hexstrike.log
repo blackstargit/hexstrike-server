@@ -1,0 +1,4 @@
+2026-06-18 11:41:26,357 - core.process_manager - INFO - 🔧 Process pool worker 0 started
+2026-06-18 11:41:26,357 - core.process_manager - INFO - 🔧 Process pool worker 1 started
+2026-06-18 11:41:26,357 - core.process_manager - INFO - 🔧 Process pool worker 2 started
+2026-06-18 11:41:26,358 - core.process_manager - INFO - 🔧 Process pool worker 3 started

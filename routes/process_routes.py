@@ -10,6 +10,8 @@ import traceback
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 
+import psutil
+
 from flask import request, jsonify
 
 from core.globals import (
@@ -29,6 +31,7 @@ from core.command_executor import (
 from core.visual_engine import ModernVisualEngine
 from core.decision_engine import TargetType, TechnologyStack, TargetProfile, AttackChain
 from core.error_handler import ErrorType, RecoveryAction, ErrorContext
+from core.process_manager import ProcessManager
 
 # ============================================================================
 # PROCESS MANAGEMENT API ENDPOINTS (v5.0 ENHANCEMENT)

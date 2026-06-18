@@ -2,8 +2,11 @@
 """MCP tool registrations: vulnerability intelligence, visual output, and decision engine"""
 
 import logging
+import time
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
-from mcp_tools.core import HexStrikeClient
+from mcp_tools.core import HexStrikeClient, HexStrikeColors
 
 logger = logging.getLogger(__name__)
 

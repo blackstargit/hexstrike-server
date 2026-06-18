@@ -4,6 +4,7 @@
 import json
 import logging
 import os
+import re
 import subprocess
 import time
 import traceback
@@ -29,6 +30,7 @@ from core.command_executor import (
 from core.visual_engine import ModernVisualEngine
 from core.decision_engine import TargetType, TechnologyStack, TargetProfile, AttackChain
 from core.error_handler import ErrorType, RecoveryAction, ErrorContext
+from core.ctf import CTFChallenge
 
 # ============================================================================
 # CTF COMPETITION EXCELLENCE FRAMEWORK API ENDPOINTS (v8.0 ENHANCEMENT)

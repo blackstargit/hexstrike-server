@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 import psutil
 
 from core.visual_engine import ModernVisualEngine
+from core.decision_engine import TargetProfile
 
 logger = logging.getLogger(__name__)
 

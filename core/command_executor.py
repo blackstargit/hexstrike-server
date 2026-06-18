@@ -3,6 +3,7 @@
 
 import os
 import re
+import sys
 import json
 import time
 import hashlib
@@ -21,7 +22,8 @@ from typing import Dict, Any, Optional, List
 import psutil
 
 from core.visual_engine import ModernVisualEngine
-from core.error_handler import ErrorContext, RecoveryAction
+from core.error_handler import ErrorContext, RecoveryAction, ErrorType
+from core.process_manager import ProcessManager
 
 logger = logging.getLogger(__name__)
 
@@ -465,7 +467,7 @@ def execute_command_with_recovery(tool_name: str, command: str, parameters: Dict
     Returns:
         A dictionary containing execution results with recovery information
     """
-    from core.globals import error_handler  # lazy import to avoid circular dependency
+    from core.globals import error_handler, degradation_manager  # lazy import to avoid circular dependency
     if parameters is None:
         parameters = {}
 
