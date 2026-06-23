@@ -15,79 +15,84 @@ def register_system_tools(mcp: FastMCP, hexstrike_client: HexStrikeClient):
     # FILE OPERATIONS & PAYLOAD GENERATION
     # ==========================================================================
 
-    @mcp.tool()
-    def create_file(filename: str, content: str, binary: bool = False) -> Dict[str, Any]:
-        """
-        Create a file with specified content on the HexStrike server.
+    # DISABLED IN CONTAINER — create_file / modify_file / delete_file are not useful
+    # in an ephemeral container since the filesystem is not shared with the frontend.
+    # Revive these (and the frontend download-chip feature) when the markdown-artifact
+    # delivery pipeline is implemented (server → backend proxy → frontend download).
+    #
+    # @mcp.tool()
+    # def create_file(filename: str, content: str, binary: bool = False) -> Dict[str, Any]:
+    #     """
+    #     Create a file with specified content on the HexStrike server.
+    #
+    #     Args:
+    #         filename: Name of the file to create
+    #         content: Content to write to the file
+    #         binary: Whether the content is binary data
+    #
+    #     Returns:
+    #         File creation results
+    #     """
+    #     data = {
+    #         "filename": filename,
+    #         "content": content,
+    #         "binary": binary
+    #     }
+    #     logger.info(f"📄 Creating file: {filename}")
+    #     result = hexstrike_client.safe_post("api/files/create", data)
+    #     if result.get("success"):
+    #         logger.info(f"✅ File created successfully: {filename}")
+    #     else:
+    #         logger.error(f"❌ Failed to create file: {filename}")
+    #     return result
 
-        Args:
-            filename: Name of the file to create
-            content: Content to write to the file
-            binary: Whether the content is binary data
+    # @mcp.tool()
+    # def modify_file(filename: str, content: str, append: bool = False) -> Dict[str, Any]:
+    #     """
+    #     Modify an existing file on the HexStrike server.
+    #
+    #     Args:
+    #         filename: Name of the file to modify
+    #         content: Content to write or append
+    #         append: Whether to append to the file (True) or overwrite (False)
+    #
+    #     Returns:
+    #         File modification results
+    #     """
+    #     data = {
+    #         "filename": filename,
+    #         "content": content,
+    #         "append": append
+    #     }
+    #     logger.info(f"✏️  Modifying file: {filename}")
+    #     result = hexstrike_client.safe_post("api/files/modify", data)
+    #     if result.get("success"):
+    #         logger.info(f"✅ File modified successfully: {filename}")
+    #     else:
+    #         logger.error(f"❌ Failed to modify file: {filename}")
+    #     return result
 
-        Returns:
-            File creation results
-        """
-        data = {
-            "filename": filename,
-            "content": content,
-            "binary": binary
-        }
-        logger.info(f"📄 Creating file: {filename}")
-        result = hexstrike_client.safe_post("api/files/create", data)
-        if result.get("success"):
-            logger.info(f"✅ File created successfully: {filename}")
-        else:
-            logger.error(f"❌ Failed to create file: {filename}")
-        return result
-
-    @mcp.tool()
-    def modify_file(filename: str, content: str, append: bool = False) -> Dict[str, Any]:
-        """
-        Modify an existing file on the HexStrike server.
-
-        Args:
-            filename: Name of the file to modify
-            content: Content to write or append
-            append: Whether to append to the file (True) or overwrite (False)
-
-        Returns:
-            File modification results
-        """
-        data = {
-            "filename": filename,
-            "content": content,
-            "append": append
-        }
-        logger.info(f"✏️  Modifying file: {filename}")
-        result = hexstrike_client.safe_post("api/files/modify", data)
-        if result.get("success"):
-            logger.info(f"✅ File modified successfully: {filename}")
-        else:
-            logger.error(f"❌ Failed to modify file: {filename}")
-        return result
-
-    @mcp.tool()
-    def delete_file(filename: str) -> Dict[str, Any]:
-        """
-        Delete a file or directory on the HexStrike server.
-
-        Args:
-            filename: Name of the file or directory to delete
-
-        Returns:
-            File deletion results
-        """
-        data = {
-            "filename": filename
-        }
-        logger.info(f"🗑️  Deleting file: {filename}")
-        result = hexstrike_client.safe_post("api/files/delete", data)
-        if result.get("success"):
-            logger.info(f"✅ File deleted successfully: {filename}")
-        else:
-            logger.error(f"❌ Failed to delete file: {filename}")
-        return result
+    # @mcp.tool()
+    # def delete_file(filename: str) -> Dict[str, Any]:
+    #     """
+    #     Delete a file or directory on the HexStrike server.
+    #
+    #     Args:
+    #         filename: Name of the file or directory to delete
+    #
+    #     Returns:
+    #         File deletion results
+    #     """
+    #     data = {
+    #         "filename": filename
+    #     }
+    #     logger.info(f"🗑️  Deleting file: {filename}")
+    #     result = hexstrike_client.safe_post("api/files/delete", data)
+    #     if result.get("success"):
+    #         logger.info(f"✅ File deleted successfully: {filename}")
+    #     else:
+    #         logger.error(f"❌ Failed to delete file: {filename}")
+    #     return result
 
     @mcp.tool()
     def list_files(directory: str = ".") -> Dict[str, Any]:

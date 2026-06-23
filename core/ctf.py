@@ -869,7 +869,8 @@ class CTFToolManager:
             "graphql-voyager": "graphql-voyager",
             "graphql-playground": "graphql-playground",
             "postman": "newman run",
-            "burpsuite": "java -jar /opt/burpsuite/burpsuite.jar",
+            # burpsuite: Community edition cannot run headlessly; use burpsuite_alternative_scan MCP tool instead
+            # "burpsuite": "java -jar /usr/share/burpsuite/burpsuite.jar",
             "owasp-zap": "zap.sh -cmd",
             "websocket-king": "python3 /opt/websocket-king/ws_test.py",
 
